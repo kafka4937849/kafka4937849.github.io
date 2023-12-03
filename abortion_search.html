@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>堕胎検索</title>
+
+    <style>
+        body {
+            margin: 20px;
+        }
+
+        dl {
+            display: grid;
+            grid-template-columns: auto 1fr;
+        }
+
+        span#keywords {
+            /* -20度の傾斜 */
+            transform: skewX(-20deg);
+            /* インライン要素として表示 */
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>堕胎検索</h1>
+    <h2>コレは何？</h2>
+    <p>
+        Twitterで堕胎に関するツイートを検索するためのツール <br>
+        ※ブラウザ上でのTwitterログイン必須
+    </p>
+
+
+    <h2>検索</h2>
+    <p>検索したいユーザー名を入力してください</p>
+
+    <input type="button" id="btn_level1" value="検索レベル１">
+    <input type="button" id="btn_level2" value="検索レベル２">
+    <input type="button" id="btn_level3" value="検索レベル３"> <br />
+    <input type="text" id="search" placeholder="@">
+
+
+    <h2>検索レベルについて</h2>
+    <dl>
+        <dt>Level1</dt>
+        <dd>直接的表現のみ　</dd>
+
+        <dt>Level2</dt>
+        <dd>関連表現のみ　</dd>
+
+        <dt>Level3</dt>
+        <dd>連想される表現　</dd>
+    </dl>
+
+
+    <script>
+        // 各レベルの検索クエリ
+        const url_level1 = "https://twitter.com/search?q=(%E4%B8%AD%E7%B5%B6%20OR%20%22%E5%A0%95%E3%82%8D%22%20OR%20%E5%A0%95%E8%83%8E%20OR%20%E6%B5%81%E7%94%A3)%20(from%3A";
+        const url_level2 = "https://twitter.com/search?q=(%E4%B8%AD%E7%B5%B6%20OR%20%22%E5%A0%95%E3%82%8D%22%20OR%20%E5%A0%95%E8%83%8E%20OR%20%E5%A6%8A%E5%A8%A0%20OR%20%E5%AD%95%20OR%20%E6%89%8B%E8%A1%93%20OR%20%E6%B5%81%E7%94%A3)%20(from%3A";
+        const url_level3 = "https://twitter.com/search?q=(%E4%B8%AD%E7%B5%B6%20OR%20%22%E5%A0%95%E3%82%8D%22%20OR%20%E5%A0%95%E8%83%8E%20OR%20%E5%A6%8A%E5%A8%A0%20OR%20%E5%AD%95%20OR%20%E6%89%8B%E8%A1%93%20OR%20%E8%B5%A4%E3%81%A1%E3%82%83%E3%82%93%20OR%20%E5%AD%90%E4%BE%9B%20OR%20%22%E3%81%8A%E3%82%8D%22%20OR%20%E3%81%A4%E3%82%8F%E3%82%8A%20OR%20%E5%91%BD%20OR%20%E5%88%9D%E6%9C%9F%20OR%20%E6%B5%81%E7%94%A3)%20(from%3A";
+
+        // 各ボタンの要素取得
+        var btn_level1 = document.getElementById("btn_level1");
+        var btn_level2 = document.getElementById("btn_level2");
+        var btn_level3 = document.getElementById("btn_level3");
+
+        // 検索処理
+        function search(url_level) {
+            var search = document.getElementById("search").value;
+            if (!search) {
+                alert("検索したいユーザー名を入力してください");
+                return;
+            }
+            if (!search.startsWith) {
+                search = "@" + search;
+            }
+
+            var url = url_level + search + ")&src=typed_query";
+            window.location.href = url
+        }
+
+        // ボタンクリック時の処理
+        btn_level1.addEventListener("click", function () {
+            search(url_level1);
+        });
+        btn_level2.addEventListener("click", function () {
+            search(url_level2);
+        });
+        btn_level3.addEventListener("click", function () {
+            search(url_level3);
+        });
+    </script>
+</body>
+
+</html>
